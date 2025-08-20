@@ -1,0 +1,1649 @@
+language_bridge_interactive.html
+
+Rendered HTML
+
+Download
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Bridge Academy - Interactive TELPAS Learning Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .audio-waveform {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            height: 60px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .waveform-bars {
+            display: flex;
+            align-items: end;
+            height: 100%;
+            padding: 10px;
+            gap: 2px;
+        }
+        
+        .waveform-bar {
+            background: rgba(255,255,255,0.8);
+            width: 3px;
+            border-radius: 1px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .waveform-bar:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+        
+        .waveform-bar:nth-child(even) {
+            animation-delay: 0.3s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { height: 20%; }
+            50% { height: 80%; }
+        }
+        
+        .progress-ring {
+            transition: stroke-dasharray 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        .badge-animate {
+            animation: bounce 0.6s ease-out;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .question-correct {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+        }
+        
+        .question-incorrect {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            color: white;
+        }
+        
+        .unlock-animation {
+            animation: unlockBounce 0.8s ease-out;
+        }
+        
+        @keyframes unlockBounce {
+            0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(2deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        .audio-controls {
+            background: rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+        }
+        
+        .interactive-element {
+            transition: all 0.3s ease;
+        }
+        
+        .interactive-element:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+<!-- Navigation -->
+<nav class="bg-white shadow-lg border-b-4 border-blue-500">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-500 text-white p-3 rounded-lg">
+                    <i class="fas fa-bridge text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Language Bridge Academy</h1>
+                    <p class="text-sm text-gray-600">Interactive TELPAS Learning Platform</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="showStudentLogin()" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                    <i class="fas fa-user-graduate mr-2"></i>Student Login
+                </button>
+                <button onclick="showTeacherLogin()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                    <i class="fas fa-chalkboard-teacher mr-2"></i>Teacher Portal
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content Container -->
+<div class="max-w-7xl mx-auto px-4 py-6">
+
+    <!-- Welcome/Landing Section -->
+    <div id="welcomeSection" class="text-center py-16">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-5xl font-bold text-gray-800 mb-6">Bridge Your Language Journey</h2>
+            <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                Interactive TELPAS preparation with Texas TEKS-aligned science content. 
+                Listen, Comprehend, Write, and Speak your way to English proficiency.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-8 mt-12">
+                <div class="bg-white p-6 rounded-xl shadow-lg interactive-element">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-headphones text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Listen & Comprehend</h3>
+                    <p class="text-gray-600">Engaging science stories with interactive comprehension questions</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg interactive-element">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-pencil-alt text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Write & Express</h3>
+                    <p class="text-gray-600">Scaffolded writing activities with academic vocabulary support</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-lg interactive-element">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-microphone text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Speak & Record</h3>
+                    <p class="text-gray-600">Voice recording with pronunciation feedback and progress tracking</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Login Modal -->
+    <div id="studentLoginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Student Login</h3>
+                <button onclick="closeModals()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input type="text" id="studentUsername" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your username">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="studentPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter your password">
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-semibold text-blue-800 mb-2">Demo Accounts:</h4>
+                    <div class="text-sm space-y-1">
+                        <p><span class="font-medium">Elementary:</span> maria.gonzalez / student123</p>
+                        <p><span class="font-medium">Middle School:</span> james.chen / student123</p>
+                        <p><span class="font-medium">High School:</span> aisha.patel / student123</p>
+                    </div>
+                </div>
+                
+                <button onclick="studentLogin()" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold transition-colors">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Access My Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Login Modal -->
+    <div id="teacherLoginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Teacher Portal</h3>
+                <button onclick="closeModals()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input type="text" id="teacherUsername" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter teacher username">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="teacherPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter password">
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <p class="text-sm"><span class="font-medium">Demo Login:</span> teacher / telpas2024</p>
+                </div>
+                
+                <button onclick="teacherLogin()" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg font-semibold transition-colors">
+                    <i class="fas fa-chalkboard-teacher mr-2"></i>Access Teacher Portal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="studentDashboard" class="hidden">
+        <!-- Student Header -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-gradient-to-r from-green-400 to-blue-500 w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                        <span id="studentInitials">MG</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800" id="studentName">Maria Gonzalez</h2>
+                        <p class="text-gray-600">Grade 4 • Current Level: <span class="font-semibold text-blue-600" id="studentLevel">Beginning</span></p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-sign-out-alt text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Progress Overview -->
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-blue-700 font-medium">Listening</p>
+                            <p class="text-2xl font-bold text-blue-800" id="listeningScore">75%</p>
+                        </div>
+                        <div class="relative w-12 h-12">
+                            <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                <path class="text-blue-200" stroke="currentColor" stroke-width="3" fill="none" d="m18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                <path class="text-blue-500 progress-ring" stroke="currentColor" stroke-width="3" stroke-dasharray="75, 100" fill="none" d="m18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-green-700 font-medium">Writing</p>
+                            <p class="text-2xl font-bold text-green-800" id="writingScore">68%</p>
+                        </div>
+                        <div class="relative w-12 h-12">
+                            <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                <path class="text-green-200" stroke="currentColor" stroke-width="3" fill="none" d="m18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                <path class="text-green-500 progress-ring" stroke="currentColor" stroke-width="3" stroke-dasharray="68, 100" fill="none" d="m18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-purple-700 font-medium">Speaking</p>
+                            <p class="text-2xl font-bold text-purple-800" id="speakingScore">72%</p>
+                        </div>
+                        <div class="relative w-12 h-12">
+                            <svg class="w-12 h-12" viewBox="0 0 36 36">
+                                <path class="text-purple-200" stroke="currentColor" stroke-width="3" fill="none" d="m18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                <path class="text-purple-500 progress-ring" stroke="currentColor" stroke-width="3" stroke-dasharray="72, 100" fill="none" d="m18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Activity -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Today's Science Adventure</h3>
+                <div class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+                    <i class="fas fa-fire mr-1"></i>3 Day Streak!
+                </div>
+            </div>
+
+            <!-- Grade Level Selector -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Choose Your Grade Level:</label>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <button onclick="selectGradeLevel('elementary')" class="grade-level-btn bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 p-4 rounded-lg text-center transition-all">
+                        <i class="fas fa-leaf text-2xl text-blue-500 mb-2"></i>
+                        <p class="font-semibold text-blue-700">Grade 3-5</p>
+                        <p class="text-sm text-blue-600">Weather & Animals</p>
+                    </button>
+                    <button onclick="selectGradeLevel('middle')" class="grade-level-btn bg-green-50 hover:bg-green-100 border-2 border-green-200 p-4 rounded-lg text-center transition-all">
+                        <i class="fas fa-atom text-2xl text-green-500 mb-2"></i>
+                        <p class="font-semibold text-green-700">Grade 6-8</p>
+                        <p class="text-sm text-green-600">Matter & Energy</p>
+                    </button>
+                    <button onclick="selectGradeLevel('high')" class="grade-level-btn bg-purple-50 hover:bg-purple-100 border-2 border-purple-200 p-4 rounded-lg text-center transition-all">
+                        <i class="fas fa-dna text-2xl text-purple-500 mb-2"></i>
+                        <p class="font-semibold text-purple-700">Grade 9-12</p>
+                        <p class="text-sm text-purple-600">Biology & Life</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activity Content -->
+            <div id="activityContent" class="hidden">
+                <!-- Step 1: Vocabulary Introduction -->
+                <div id="vocabularyStep" class="activity-step">
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                        <h4 class="text-lg font-semibold text-blue-800 mb-2">
+                            <i class="fas fa-book mr-2"></i>Step 1: Learn Key Words
+                        </h4>
+                        <p class="text-blue-700">Listen to and learn important science vocabulary before we start!</p>
+                    </div>
+                    
+                    <div id="vocabularyCards" class="grid md:grid-cols-2 gap-4 mb-6">
+                        <!-- Vocabulary cards will be inserted here -->
+                    </div>
+                    
+                    <button onclick="completeVocabulary()" id="vocabularyCompleteBtn" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50" disabled>
+                        <i class="fas fa-arrow-right mr-2"></i>Continue to Listening
+                    </button>
+                </div>
+
+                <!-- Step 2: Listening -->
+                <div id="listeningStep" class="activity-step hidden">
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+                        <h4 class="text-lg font-semibold text-green-800 mb-2">
+                            <i class="fas fa-headphones mr-2"></i>Step 2: Listen to the Story
+                        </h4>
+                        <p class="text-green-700">Listen carefully and take notes. You can replay as many times as you need!</p>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-lg p-6 mb-4">
+                        <div class="text-center mb-4">
+                            <h5 class="text-xl font-bold text-gray-800 mb-2" id="storyTitle"></h5>
+                            <p class="text-gray-600" id="storyDescription"></p>
+                        </div>
+
+                        <div class="audio-controls p-4 mb-4">
+                            <div class="audio-waveform mb-4">
+                                <div class="waveform-bars">
+                                    <div class="waveform-bar" style="height: 30%"></div>
+                                    <div class="waveform-bar" style="height: 50%"></div>
+                                    <div class="waveform-bar" style="height: 70%"></div>
+                                    <div class="waveform-bar" style="height: 40%"></div>
+                                    <div class="waveform-bar" style="height: 80%"></div>
+                                    <div class="waveform-bar" style="height: 60%"></div>
+                                    <div class="waveform-bar" style="height: 90%"></div>
+                                    <div class="waveform-bar" style="height: 45%"></div>
+                                    <div class="waveform-bar" style="height: 75%"></div>
+                                    <div class="waveform-bar" style="height: 35%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-center space-x-4">
+                                <button onclick="playAudio()" class="bg-green-500 hover:bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center transition-colors">
+                                    <i class="fas fa-play" id="playIcon"></i>
+                                </button>
+                                <div class="flex-1 bg-gray-200 rounded-full h-2 mx-4">
+                                    <div class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 0%" id="audioProgress"></div>
+                                </div>
+                                <span class="text-sm text-gray-600" id="audioTime">0:00 / 1:30</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Take notes while listening:</label>
+                            <textarea id="listeningNotes" class="w-full p-3 border border-gray-300 rounded-lg resize-none" rows="3" placeholder="Write down important ideas, new words, or questions..."></textarea>
+                        </div>
+                    </div>
+
+                    <button onclick="completeListening()" id="listeningCompleteBtn" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50" disabled>
+                        <i class="fas fa-arrow-right mr-2"></i>Continue to Questions
+                    </button>
+                </div>
+
+                <!-- Step 3: Comprehension Questions -->
+                <div id="comprehensionStep" class="activity-step hidden">
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+                        <h4 class="text-lg font-semibold text-yellow-800 mb-2">
+                            <i class="fas fa-question-circle mr-2"></i>Step 3: Answer Questions
+                        </h4>
+                        <p class="text-yellow-700">Show what you understood! You can go back and listen again if needed.</p>
+                    </div>
+
+                    <div id="comprehensionQuestions" class="space-y-6 mb-6">
+                        <!-- Questions will be inserted here -->
+                    </div>
+
+                    <button onclick="completeComprehension()" id="comprehensionCompleteBtn" class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition-colors disabled:opacity-50" disabled>
+                        <i class="fas fa-arrow-right mr-2"></i>Continue to Writing
+                    </button>
+                </div>
+
+                <!-- Step 4: Writing -->
+                <div id="writingStep" class="activity-step hidden">
+                    <div class="bg-purple-50 border-l-4 border-purple-500 p-4 mb-4">
+                        <h4 class="text-lg font-semibold text-purple-800 mb-2">
+                            <i class="fas fa-pencil-alt mr-2"></i>Step 4: Write Your Response
+                        </h4>
+                        <p class="text-purple-700">Use what you learned to write a thoughtful response with science vocabulary!</p>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-lg p-6 mb-4">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2" id="writingPrompt"></label>
+                            <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                                <p class="text-sm text-blue-700 font-medium mb-2">Sentence starters to help you:</p>
+                                <div id="sentenceStarters" class="text-sm text-blue-600 space-y-1">
+                                    <!-- Sentence starters will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <textarea id="writingResponse" class="w-full p-4 border border-gray-300 rounded-lg resize-none" rows="6" placeholder="Start writing your response here..."></textarea>
+                        
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="text-sm text-gray-600">
+                                <span id="wordCount">0</span> words written
+                            </div>
+                            <div class="space-x-2">
+                                <button onclick="checkGrammar()" class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition-colors">
+                                    <i class="fas fa-spell-check mr-1"></i>Check Grammar
+                                </button>
+                                <button onclick="addVocabulary()" class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded hover:bg-green-200 transition-colors">
+                                    <i class="fas fa-plus mr-1"></i>Add Science Words
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="completeWriting()" id="writingCompleteBtn" class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition-colors disabled:opacity-50" disabled>
+                        <i class="fas fa-arrow-right mr-2"></i>Continue to Speaking
+                    </button>
+                </div>
+
+                <!-- Step 5: Speaking -->
+                <div id="speakingStep" class="activity-step hidden">
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                        <h4 class="text-lg font-semibold text-red-800 mb-2">
+                            <i class="fas fa-microphone mr-2"></i>Step 5: Record Your Speaking
+                        </h4>
+                        <p class="text-red-700">Practice speaking about what you learned! Take your time and speak clearly.</p>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-lg p-6 mb-4">
+                        <div class="mb-4">
+                            <h5 class="font-semibold text-gray-800 mb-2" id="speakingPrompt"></h5>
+                            <div class="bg-yellow-50 p-3 rounded-lg mb-4">
+                                <p class="text-sm text-yellow-700 font-medium mb-2">Key phrases to use:</p>
+                                <div id="keyPhrases" class="text-sm text-yellow-600 grid grid-cols-2 gap-2">
+                                    <!-- Key phrases will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="audio-waveform mb-6" id="recordingWaveform" style="display: none;">
+                                <div class="waveform-bars">
+                                    <div class="waveform-bar" style="height: 20%"></div>
+                                    <div class="waveform-bar" style="height: 60%"></div>
+                                    <div class="waveform-bar" style="height: 40%"></div>
+                                    <div class="waveform-bar" style="height: 80%"></div>
+                                    <div class="waveform-bar" style="height: 30%"></div>
+                                    <div class="waveform-bar" style="height: 70%"></div>
+                                    <div class="waveform-bar" style="height: 50%"></div>
+                                    <div class="waveform-bar" style="height: 90%"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-x-4 mb-4">
+                                <button onclick="startRecording()" id="recordBtn" class="bg-red-500 hover:bg-red-600 text-white w-16 h-16 rounded-full flex items-center justify-center transition-colors mx-auto">
+                                    <i class="fas fa-microphone text-xl"></i>
+                                </button>
+                            </div>
+                            
+                            <div id="recordingStatus" class="text-gray-600 mb-4">Click the microphone to start recording</div>
+                            
+                            <div id="playbackControls" class="hidden space-x-4">
+                                <button onclick="playRecording()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    <i class="fas fa-play mr-2"></i>Play Recording
+                                </button>
+                                <button onclick="retakeRecording()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    <i class="fas fa-redo mr-2"></i>Record Again
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="completeSpeaking()" id="speakingCompleteBtn" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50" disabled>
+                        <i class="fas fa-check mr-2"></i>Complete Activity
+                    </button>
+                </div>
+
+                <!-- Completion -->
+                <div id="completionStep" class="activity-step hidden text-center">
+                    <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-xl p-8 mb-6">
+                        <div class="text-6xl mb-4">🎉</div>
+                        <h3 class="text-3xl font-bold mb-2">Excellent Work!</h3>
+                        <p class="text-lg opacity-90">You've completed today's science adventure!</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <div class="text-3xl mb-2">🏆</div>
+                            <h4 class="font-semibold text-gray-800">Achievement Unlocked</h4>
+                            <p class="text-sm text-gray-600">Science Explorer</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <div class="text-3xl mb-2">⭐</div>
+                            <h4 class="font-semibold text-gray-800">Points Earned</h4>
+                            <p class="text-sm text-gray-600">+150 XP</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <div class="text-3xl mb-2">📈</div>
+                            <h4 class="font-semibold text-gray-800">Progress Update</h4>
+                            <p class="text-sm text-gray-600">Moving toward Intermediate!</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="startNewActivity()" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all">
+                        <i class="fas fa-rocket mr-2"></i>Try Another Activity
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements Panel -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-trophy text-yellow-500 mr-2"></i>Your Achievements
+            </h3>
+            
+            <div class="grid md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-yellow-50 rounded-lg">
+                    <div class="text-2xl mb-2">🎯</div>
+                    <div class="text-sm font-medium text-gray-800">First Steps</div>
+                    <div class="text-xs text-gray-600">Complete first activity</div>
+                </div>
+                <div class="text-center p-4 bg-blue-50 rounded-lg">
+                    <div class="text-2xl mb-2">🎧</div>
+                    <div class="text-sm font-medium text-gray-800">Good Listener</div>
+                    <div class="text-xs text-gray-600">Listen to 5 stories</div>
+                </div>
+                <div class="text-center p-4 bg-green-50 rounded-lg">
+                    <div class="text-2xl mb-2">✍️</div>
+                    <div class="text-sm font-medium text-gray-800">Word Writer</div>
+                    <div class="text-xs text-gray-600">Write 100 words</div>
+                </div>
+                <div class="text-center p-4 bg-purple-50 rounded-lg opacity-50">
+                    <div class="text-2xl mb-2">🎤</div>
+                    <div class="text-sm font-medium text-gray-800">Voice Master</div>
+                    <div class="text-xs text-gray-600">10 recordings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Dashboard -->
+    <div id="teacherDashboard" class="hidden">
+        <!-- Teacher Header -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Teacher Portal</h2>
+                    <p class="text-gray-600">Manage students and create TELPAS-aligned content</p>
+                </div>
+                <button onclick="logout()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-sign-out-alt text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Teacher Navigation -->
+        <div class="bg-white rounded-xl shadow-lg mb-6">
+            <div class="border-b border-gray-200">
+                <nav class="flex space-x-8 px-6">
+                    <button onclick="showTeacherTab('overview')" class="teacher-tab py-4 px-2 border-b-2 border-blue-500 font-medium text-blue-600">
+                        <i class="fas fa-chart-line mr-2"></i>Class Overview
+                    </button>
+                    <button onclick="showTeacherTab('students')" class="teacher-tab py-4 px-2 border-b-2 border-transparent font-medium text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-users mr-2"></i>Student Management
+                    </button>
+                    <button onclick="showTeacherTab('content')" class="teacher-tab py-4 px-2 border-b-2 border-transparent font-medium text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-plus-circle mr-2"></i>Create Content
+                    </button>
+                    <button onclick="showTeacherTab('assessments')" class="teacher-tab py-4 px-2 border-b-2 border-transparent font-medium text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-clipboard-list mr-2"></i>Assessments
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overviewTab" class="teacher-tab-content p-6">
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">Total Students</h3>
+                        <p class="text-3xl font-bold">24</p>
+                        <p class="text-blue-100 text-sm">Across 3 grade bands</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">Active Today</h3>
+                        <p class="text-3xl font-bold">18</p>
+                        <p class="text-green-100 text-sm">75% engagement rate</p>
+                    </div>
+                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-2">Activities Created</h3>
+                        <p class="text-3xl font-bold">12</p>
+                        <p class="text-purple-100 text-sm">This month</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white border-2 border-gray-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">TELPAS Level Distribution</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-600">Beginning</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-red-500 h-2 rounded-full" style="width: 25%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-500">6 students</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-600">Intermediate</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 40%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-500">10 students</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-600">Advanced</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 30%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-500">7 students</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-600">Advanced High</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 5%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-500">1 student</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-lg p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                                <div class="bg-green-500 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm">MG</div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">Maria completed Weather Patterns</p>
+                                    <p class="text-xs text-gray-500">2 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                                <div class="bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm">JC</div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">James submitted Cell Structure recording</p>
+                                    <p class="text-xs text-gray-500">5 minutes ago</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
+                                <div class="bg-purple-500 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm">AP</div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">Aisha earned Speaking Star badge</p>
+                                    <p class="text-xs text-gray-500">12 minutes ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Tab -->
+            <div id="studentsTab" class="teacher-tab-content p-6 hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">Student Management</h3>
+                    <div class="space-x-4">
+                        <button onclick="uploadStudents()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-upload mr-2"></i>Upload Roster
+                        </button>
+                        <button onclick="addStudent()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-user-plus mr-2"></i>Add Student
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white border-2 border-gray-200 rounded-lg overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grade</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TELPAS Level</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Active</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="bg-green-500 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm mr-3">MG</div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Maria Gonzalez</div>
+                                            <div class="text-sm text-gray-500"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7815190a1119561f17160219141d02380b1b10171714561d1c0d">[email&#160;protected]</a></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Beginning</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2 minutes ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="viewStudent('maria')" class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                    <button onclick="assessStudent('maria')" class="text-green-600 hover:text-green-900">Assess</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm mr-3">JC</div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">James Chen</div>
+                                            <div class="text-sm text-gray-500"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e68c878b8395c8858e8388a695858e89898ac8838293">[email&#160;protected]</a></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">7</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Intermediate</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5 minutes ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="viewStudent('james')" class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                    <button onclick="assessStudent('james')" class="text-green-600 hover:text-green-900">Assess</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="bg-purple-500 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm mr-3">AP</div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Aisha Patel</div>
+                                            <div class="text-sm text-gray-500"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="04656d776c652a74657061684477676c6b6b682a616071">[email&#160;protected]</a></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">10</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Advanced</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-purple-500 h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">12 minutes ago</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button onclick="viewStudent('aisha')" class="text-blue-600 hover:text-blue-900 mr-3">View</button>
+                                    <button onclick="assessStudent('aisha')" class="text-green-600 hover:text-green-900">Assess</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Content Creation Tab -->
+            <div id="contentTab" class="teacher-tab-content p-6 hidden">
+                <h3 class="text-xl font-bold text-gray-800 mb-6">Create New Activity</h3>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Activity Title</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Enter activity title">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Grade Band</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option>Select Grade Band</option>
+                                <option>Grade 3-5 (Elementary)</option>
+                                <option>Grade 6-8 (Middle School)</option>
+                                <option>Grade 9-12 (High School)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">TEKS Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option>Select TEKS Standard</option>
+                                <option>3.7.A - Earth and Space</option>
+                                <option>6.5.A - Matter and Energy</option>
+                                <option>Biology.4.A - Cellular Processes</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Target TELPAS Level</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2"> Beginning
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2"> Intermediate
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2"> Advanced
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="mr-2"> Advanced High
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Audio Story</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                                <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                                <p class="text-gray-600">Drag and drop audio file or click to browse</p>
+                                <input type="file" accept="audio/*" class="hidden">
+                                <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">Choose File</button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Vocabulary Words</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" rows="3" placeholder="Enter key vocabulary words, one per line"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Comprehension Questions</label>
+                            <div class="space-y-3">
+                                <div class="border border-gray-300 rounded-lg p-3">
+                                    <input type="text" class="w-full mb-2 px-3 py-2 border border-gray-200 rounded" placeholder="Question 1">
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <input type="text" class="px-3 py-1 border border-gray-200 rounded text-sm" placeholder="Option A">
+                                        <input type="text" class="px-3 py-1 border border-gray-200 rounded text-sm" placeholder="Option B">
+                                        <input type="text" class="px-3 py-1 border border-gray-200 rounded text-sm" placeholder="Option C">
+                                        <input type="text" class="px-3 py-1 border border-gray-200 rounded text-sm" placeholder="Option D">
+                                    </div>
+                                </div>
+                                <button class="text-blue-600 hover:text-blue-800 text-sm">
+                                    <i class="fas fa-plus mr-1"></i>Add Another Question
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-4 mt-8">
+                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-2 rounded-lg transition-colors">Save as Draft</button>
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">Publish Activity</button>
+                </div>
+            </div>
+
+            <!-- Assessments Tab -->
+            <div id="assessmentsTab" class="teacher-tab-content p-6 hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">TELPAS Assessments</h3>
+                    <button onclick="createAssessment()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-plus mr-2"></i>New Assessment
+                    </button>
+                </div>
+
+                <div class="bg-white border-2 border-gray-200 rounded-lg p-6 mb-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">TELPAS Rubric Quick Reference</h4>
+                    
+                    <div class="grid md:grid-cols-4 gap-4">
+                        <div class="border border-red-200 rounded-lg p-4 bg-red-50">
+                            <h5 class="font-semibold text-red-800 mb-2">Beginning</h5>
+                            <ul class="text-sm text-red-700 space-y-1">
+                                <li>• Little to no English ability</li>
+                                <li>• Requires substantial support</li>
+                                <li>• Uses isolated words/phrases</li>
+                                <li>• Depends on visual cues</li>
+                            </ul>
+                        </div>
+                        <div class="border border-yellow-200 rounded-lg p-4 bg-yellow-50">
+                            <h5 class="font-semibold text-yellow-800 mb-2">Intermediate</h5>
+                            <ul class="text-sm text-yellow-700 space-y-1">
+                                <li>• Simple, high-frequency English</li>
+                                <li>• Routine academic settings</li>
+                                <li>• Some support needed</li>
+                                <li>• Basic communication</li>
+                            </ul>
+                        </div>
+                        <div class="border border-blue-200 rounded-lg p-4 bg-blue-50">
+                            <h5 class="font-semibold text-blue-800 mb-2">Advanced</h5>
+                            <ul class="text-sm text-blue-700 space-y-1">
+                                <li>• Grade-appropriate English</li>
+                                <li>• With acquisition support</li>
+                                <li>• Academic contexts</li>
+                                <li>• Occasional errors</li>
+                            </ul>
+                        </div>
+                        <div class="border border-green-200 rounded-lg p-4 bg-green-50">
+                            <h5 class="font-semibold text-green-800 mb-2">Advanced High</h5>
+                            <ul class="text-sm text-green-700 space-y-1">
+                                <li>• Minimal support needed</li>
+                                <li>• Near native-like ability</li>
+                                <li>• Complex academic language</li>
+                                <li>• Rare errors</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white border-2 border-gray-200 rounded-lg p-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Recent Assessments</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium">Fall TELPAS Practice</p>
+                                    <p class="text-sm text-gray-600">24 students assessed</p>
+                                </div>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Complete</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium">Science Vocabulary Check</p>
+                                    <p class="text-sm text-gray-600">18 students assessed</p>
+                                </div>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">In Progress</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-lg p-6">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Assessment Templates</h4>
+                        <div class="space-y-2">
+                            <button class="w-full text-left p-3 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+                                <i class="fas fa-headphones text-blue-600 mr-2"></i>Listening Assessment Template
+                            </button>
+                            <button class="w-full text-left p-3 bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
+                                <i class="fas fa-pencil-alt text-green-600 mr-2"></i>Writing Assessment Template
+                            </button>
+                            <button class="w-full text-left p-3 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors">
+                                <i class="fas fa-microphone text-purple-600 mr-2"></i>Speaking Assessment Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Global variables
+let currentUser = null;
+let currentActivity = null;
+let isRecording = false;
+let audioContext = null;
+let currentStep = 1;
+let completedVocabulary = [];
+let listeningComplete = false;
+let comprehensionScore = 0;
+let writingWordCount = 0;
+let hasRecording = false;
+
+// Sample data
+const sampleActivities = {
+    elementary: {
+        title: "Weather Patterns Around Us",
+        description: "Learn about different types of weather and how they affect our daily lives",
+        vocabulary: [
+            { word: "temperature", definition: "How hot or cold something is", audio: "temp.mp3" },
+            { word: "precipitation", definition: "Water that falls from clouds as rain, snow, or hail", audio: "precip.mp3" },
+            { word: "pattern", definition: "Something that repeats in a regular way", audio: "pattern.mp3" },
+            { word: "season", definition: "One of the four parts of the year: spring, summer, fall, winter", audio: "season.mp3" }
+        ],
+        story: {
+            title: "Maria's Weather Station",
+            text: "Maria loves to watch the weather. Every morning, she checks her weather station in the backyard. She records the temperature, looks at the clouds, and measures any precipitation. Maria notices that weather follows patterns. In spring, she sees more rain and warmer temperatures. Summer brings hot, sunny days. Fall has cooler weather and changing leaves. Winter brings cold temperatures and sometimes snow. By tracking these patterns, Maria can predict what weather might come next!",
+            audio: "weather_story.mp3"
+        },
+        questions: [
+            {
+                question: "What does Maria do every morning?",
+                options: ["Reads a book", "Checks her weather station", "Waters plants", "Feeds birds"],
+                correct: 1,
+                explanation: "The story says Maria checks her weather station in the backyard every morning."
+            },
+            {
+                question: "Which season brings hot, sunny days according to the story?",
+                options: ["Spring", "Summer", "Fall", "Winter"],
+                correct: 1,
+                explanation: "The story mentions that summer brings hot, sunny days."
+            }
+        ],
+        writingPrompt: "Describe the weather patterns you see in your area. What happens in each season? Use vocabulary words like temperature, precipitation, and pattern.",
+        sentenceStarters: [
+            "In my area, the weather patterns include...",
+            "During spring, the temperature is...",
+            "Summer brings...",
+            "In fall, we notice...",
+            "Winter weather has..."
+        ],
+        speakingPrompt: "Talk about your favorite type of weather. Explain why you like it and what activities you can do in that weather.",
+        keyPhrases: [
+            "My favorite weather is...",
+            "I like it because...",
+            "When it's [weather type], I can...",
+            "The temperature feels...",
+            "This weather pattern usually happens in..."
+        ]
+    },
+    middle: {
+        title: "Density and Floating Objects",
+        description: "Explore why some objects float while others sink by understanding density",
+        vocabulary: [
+            { word: "density", definition: "How much matter is packed into a space", audio: "density.mp3" },
+            { word: "buoyancy", definition: "The ability of an object to float in a liquid", audio: "buoyancy.mp3" },
+            { word: "mass", definition: "The amount of matter in an object", audio: "mass.mp3" },
+            { word: "volume", definition: "The amount of space an object takes up", audio: "volume.mp3" }
+        ],
+        story: {
+            title: "The Floating Mystery",
+            text: "Sarah was confused. Why did a large piece of wood float on water, but a small metal coin sank? Her science teacher explained that it's all about density. Density is mass divided by volume. Objects with lower density than water will float, while objects with higher density will sink. The wood has a lower density because it has air spaces inside, making it less dense than water. The metal coin is very dense because its atoms are packed tightly together. This is why ships made of metal can float - they're designed with hollow spaces that make their overall density lower than water.",
+            audio: "density_story.mp3"
+        },
+        questions: [
+            {
+                question: "According to the story, what determines if an object floats or sinks?",
+                options: ["Its size", "Its color", "Its density", "Its age"],
+                correct: 2,
+                explanation: "The story explains that density determines whether objects float or sink in water."
+            },
+            {
+                question: "Why can ships made of metal float?",
+                options: ["They are very light", "They have hollow spaces", "They are painted", "They move fast"],
+                correct: 1,
+                explanation: "The story mentions that ships have hollow spaces that make their overall density lower than water."
+            }
+        ],
+        writingPrompt: "Explain the relationship between density, mass, and volume. Give examples of objects that float and sink, and explain why using scientific vocabulary.",
+        sentenceStarters: [
+            "Density is the relationship between...",
+            "When an object's density is lower than water...",
+            "Objects that sink have...",
+            "For example, a [object] floats because...",
+            "Scientists calculate density by..."
+        ],
+        speakingPrompt: "Design an experiment to test which materials float or sink. Explain your hypothesis and what you expect to find.",
+        keyPhrases: [
+            "My hypothesis is that...",
+            "I predict that [material] will float because...",
+            "The density of this object is...",
+            "To test this, I would...",
+            "The results would show..."
+        ]
+    },
+    high: {
+        title: "Cellular Respiration and Energy",
+        description: "Understand how cells convert glucose into usable energy through cellular respiration",
+        vocabulary: [
+            { word: "cellular respiration", definition: "The process cells use to break down glucose and produce ATP energy", audio: "cellular.mp3" },
+            { word: "mitochondria", definition: "The organelles where cellular respiration occurs, known as powerhouses of the cell", audio: "mito.mp3" },
+            { word: "ATP", definition: "Adenosine triphosphate, the energy currency of cells", audio: "atp.mp3" },
+            { word: "glucose", definition: "A simple sugar that serves as the primary fuel for cellular respiration", audio: "glucose.mp3" }
+        ],
+        story: {
+            title: "The Cell's Energy Factory",
+            text: "Inside every living cell, there's a remarkable process happening millions of times per second. Cellular respiration converts glucose, a simple sugar from the food we eat, into ATP - the universal energy currency of life. This process primarily occurs in the mitochondria, often called the powerhouse of the cell. The equation for cellular respiration is: C6H12O6 + 6O2 → 6CO2 + 6H2O + ATP. This means glucose plus oxygen yields carbon dioxide, water, and energy. Without this process, cells couldn't power essential functions like growth, repair, and reproduction. Interestingly, this process is the reverse of photosynthesis, creating a beautiful cycle where plants produce glucose and oxygen, while animals use these products to create energy and release carbon dioxide that plants need.",
+            audio: "cellular_story.mp3"
+        },
+        questions: [
+            {
+                question: "Where in the cell does cellular respiration primarily occur?",
+                options: ["Nucleus", "Ribosomes", "Mitochondria", "Cell membrane"],
+                correct: 2,
+                explanation: "The story states that cellular respiration primarily occurs in the mitochondria, the powerhouse of the cell."
+            },
+            {
+                question: "What is ATP's role in the cell?",
+                options: ["Genetic information storage", "Protein synthesis", "Energy currency", "Waste removal"],
+                correct: 2,
+                explanation: "ATP is described as the universal energy currency of life in the passage."
+            }
+        ],
+        writingPrompt: "Compare and contrast cellular respiration with photosynthesis. Explain how these processes create a cycle in nature and why both are essential for life on Earth.",
+        sentenceStarters: [
+            "Cellular respiration and photosynthesis are related because...",
+            "While photosynthesis produces..., cellular respiration produces...",
+            "The equation for cellular respiration shows...",
+            "This process is essential for life because...",
+            "The relationship between these processes creates a cycle where..."
+        ],
+        speakingPrompt: "Explain to a younger student how your body gets energy from food. Use the process of cellular respiration in your explanation.",
+        keyPhrases: [
+            "When you eat food, your body...",
+            "The glucose from food travels to...",
+            "In the mitochondria, a process called...",
+            "This produces ATP, which is...",
+            "That's how your cells get energy to..."
+        ]
+    }
+};
+
+// Modal functions
+function showStudentLogin() {
+    document.getElementById('studentLoginModal').classList.remove('hidden');
+}
+
+function showTeacherLogin() {
+    document.getElementById('teacherLoginModal').classList.remove('hidden');
+}
+
+function closeModals() {
+    document.getElementById('studentLoginModal').classList.add('hidden');
+    document.getElementById('teacherLoginModal').classList.add('hidden');
+}
+
+// Login functions
+function studentLogin() {
+    const username = document.getElementById('studentUsername').value;
+    const password = document.getElementById('studentPassword').value;
+    
+    if ((username === 'maria.gonzalez' && password === 'student123') ||
+        (username === 'james.chen' && password === 'student123') ||
+        (username === 'aisha.patel' && password === 'student123') ||
+        (username === 'demo.student' && password === 'demo123')) {
+        
+        currentUser = { type: 'student', username: username };
+        closeModals();
+        showStudentDashboard(username);
+    } else {
+        alert('Invalid credentials. Try: maria.gonzalez / student123');
+    }
+}
+
+function teacherLogin() {
+    const username = document.getElementById('teacherUsername').value;
+    const password = document.getElementById('teacherPassword').value;
+    
+    if (username === 'teacher' && password === 'telpas2024') {
+        currentUser = { type: 'teacher', username: username };
+        closeModals();
+        showTeacherDashboard();
+    } else {
+        alert('Invalid credentials. Try: teacher / telpas2024');
+    }
+}
+
+function logout() {
+    currentUser = null;
+    document.getElementById('welcomeSection').classList.remove('hidden');
+    document.getElementById('studentDashboard').classList.add('hidden');
+    document.getElementById('teacherDashboard').classList.add('hidden');
+}
+
+// Dashboard functions
+function showStudentDashboard(username) {
+    document.getElementById('welcomeSection').classList.add('hidden');
+    document.getElementById('studentDashboard').classList.remove('hidden');
+    
+    // Customize dashboard based on user
+    const profiles = {
+        'maria.gonzalez': { name: 'Maria Gonzalez', level: 'Beginning', initials: 'MG' },
+        'james.chen': { name: 'James Chen', level: 'Intermediate', initials: 'JC' },
+        'aisha.patel': { name: 'Aisha Patel', level: 'Advanced', initials: 'AP' },
+        'demo.student': { name: 'Demo Student', level: 'Beginning', initials: 'DS' }
+    };
+    
+    const profile = profiles[username] || profiles['demo.student'];
+    document.getElementById('studentName').textContent = profile.name;
+    document.getElementById('studentLevel').textContent = profile.level;
+    document.getElementById('studentInitials').textContent = profile.initials;
+}
+
+function showTeacherDashboard() {
+    document.getElementById('welcomeSection').classList.add('hidden');
+    document.getElementById('teacherDashboard').classList.remove('hidden');
+    showTeacherTab('overview');
+}
+
+// Grade level selection
+function selectGradeLevel(level) {
+    // Update button states
+    document.querySelectorAll('.grade-level-btn').forEach(btn => {
+        btn.classList.remove('border-blue-500', 'bg-blue-100');
+        btn.classList.add('border-gray-200', 'bg-gray-50');
+    });
+    
+    event.target.closest('.grade-level-btn').classList.remove('border-gray-200', 'bg-gray-50');
+    event.target.closest('.grade-level-btn').classList.add('border-blue-500', 'bg-blue-100');
+    
+    // Load activity content
+    currentActivity = sampleActivities[level];
+    loadActivityContent();
+    document.getElementById('activityContent').classList.remove('hidden');
+    
+    // Reset progress
+    currentStep = 1;
+    resetActivityProgress();
+}
+
+function loadActivityContent() {
+    if (!currentActivity) return;
+    
+    // Load vocabulary
+    const vocabularyCards = document.getElementById('vocabularyCards');
+    vocabularyCards.innerHTML = '';
+    
+    currentActivity.vocabulary.forEach((vocab, index) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white border-2 border-gray-200 rounded-lg p-4 interactive-element';
+        card.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <h6 class="font-semibold text-gray-800">${vocab.word}</h6>
+                <button onclick="playVocabAudio(${index})" class="text-blue-500 hover:text-blue-700">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <p class="text-gray-600 text-sm mb-3">${vocab.definition}</p>
+            <button onclick="markVocabLearned(${index})" class="vocab-learned-btn bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm transition-colors hover:bg-blue-100">
+                <i class="fas fa-check mr-1"></i>Got it!
+            </button>
+        `;
+        vocabularyCards.appendChild(card);
+    });
+    
+    // Load story content
+    document.getElementById('storyTitle').textContent = currentActivity.story.title;
+    document.getElementById('storyDescription').textContent = currentActivity.description;
+    
+    // Load questions
+    loadComprehensionQuestions();
+    
+    // Load writing content
+    document.getElementById('writingPrompt').textContent = currentActivity.writingPrompt;
+    const starters = document.getElementById('sentenceStarters');
+    starters.innerHTML = '';
+    currentActivity.sentenceStarters.forEach(starter => {
+        const p = document.createElement('p');
+        p.textContent = `• ${starter}`;
+        starters.appendChild(p);
+    });
+    
+    // Load speaking content
+    document.getElementById('speakingPrompt').textContent = currentActivity.speakingPrompt;
+    const phrases = document.getElementById('keyPhrases');
+    phrases.innerHTML = '';
+    currentActivity.keyPhrases.forEach(phrase => {
+        const span = document.createElement('span');
+        span.className = 'bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs';
+        span.textContent = phrase;
+        phrases.appendChild(span);
+    });
+}
+
+function loadComprehensionQuestions() {
+    const container = document.getElementById('comprehensionQuestions');
+    container.innerHTML = '';
+    
+    currentActivity.questions.forEach((q, qIndex) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'bg-white border-2 border-gray-200 rounded-lg p-6';
+        questionDiv.innerHTML = `
+            <h5 class="font-semibold text-gray-800 mb-4">Question ${qIndex + 1}: ${q.question}</h5>
+            <div class="space-y-2 mb-4">
+                ${q.options.map((option, oIndex) => `
+                    <button onclick="selectAnswer(${qIndex}, ${oIndex})" 
+                            class="answer-option w-full text-left p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
+                        ${String.fromCharCode(65 + oIndex)}. ${option}
+                    </button>
+                `).join('')}
+            </div>
+            <div id="feedback-${qIndex}" class="hidden p-3 rounded-lg"></div>
+        `;
+        container.appendChild(questionDiv);
+    });
+}
+
+// Activity step functions
+function markVocabLearned(index) {
+    const btn = event.target;
+    btn.classList.remove('bg-gray-200', 'text-gray-700');
+    btn.classList.add('bg-green-500', 'text-white');
+    btn.innerHTML = '<i class="fas fa-check mr-1"></i>Learned!';
+    
+    completedVocabulary.push(index);
+    
+    if (completedVocabulary.length >= currentActivity.vocabulary.length) {
+        document.getElementById('vocabularyCompleteBtn').disabled = false;
+        document.getElementById('vocabularyCompleteBtn').classList.add('pulse');
+    }
+}
+
+function playVocabAudio(index) {
+    // Simulate audio play
+    console.log(`Playing audio for: ${currentActivity.vocabulary[index].word}`);
+    // In real implementation, this would play the actual audio file
+}
+
+function completeVocabulary() {
+    document.getElementById('vocabularyStep').classList.add('hidden');
+    document.getElementById('listeningStep').classList.remove('hidden');
+    currentStep = 2;
+}
+
+function playAudio() {
+    const playIcon = document.getElementById('playIcon');
+    const progressBar = document.getElementById('audioProgress');
+    
+    if (playIcon.classList.contains('fa-play')) {
+        playIcon.classList.remove('fa-play');
+        playIcon.classList.add('fa-pause');
+        
+        // Simulate audio progress
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 2;
+            progressBar.style.width = progress + '%';
+            
+            if (progress >= 100) {
+                clearInterval(interval);
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                listeningComplete = true;
+                document.getElementById('listeningCompleteBtn').disabled = false;
+            }
+        }, 100);
+    } else {
+        playIcon.classList.remove('fa-pause');
+        playIcon.classList.add('fa-play');
+    }
+}
+
+function completeListening() {
+    document.getElementById('listeningStep').classList.add('hidden');
+    document.getElementById('comprehensionStep').classList.remove('hidden');
+    currentStep = 3;
+}
+
+function selectAnswer(questionIndex, answerIndex) {
+    const question = currentActivity.questions[questionIndex];
+    const feedbackDiv = document.getElementById(`feedback-${questionIndex}`);
+    const isCorrect = answerIndex === question.correct;
+    
+    // Update button states
+    document.querySelectorAll(`#comprehensionQuestions > div:nth-child(${questionIndex + 1}) .answer-option`).forEach((btn, index) => {
+        btn.classList.remove('border-green-500', 'border-red-500', 'question-correct', 'question-incorrect');
+        
+        if (index === question.correct) {
+            btn.classList.add('border-green-500', 'question-correct');
+        } else if (index === answerIndex && !isCorrect) {
+            btn.classList.add('border-red-500', 'question-incorrect');
+        }
+        
+        btn.disabled = true;
+    });
+    
+    // Show feedback
+    feedbackDiv.classList.remove('hidden');
+    feedbackDiv.className = `p-3 rounded-lg ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+    feedbackDiv.innerHTML = `
+        <div class="flex items-start space-x-2">
+            <i class="fas ${isCorrect ? 'fa-check-circle' : 'fa-times-circle'} mt-1"></i>
+            <div>
+                <p class="font-medium">${isCorrect ? 'Correct!' : 'Not quite right.'}</p>
+                <p class="text-sm mt-1">${question.explanation}</p>
+            </div>
+        </div>
+    `;
+    
+    if (isCorrect) {
+        comprehensionScore++;
+    }
+    
+    // Check if all questions answered
+    const totalQuestions = currentActivity.questions.length;
+    const answeredQuestions = document.querySelectorAll('#comprehensionQuestions .question-correct, #comprehensionQuestions .question-incorrect').length;
+    
+    if (answeredQuestions >= totalQuestions) {
+        setTimeout(() => {
+            document.getElementById('comprehensionCompleteBtn').disabled = false;
+        }, 1000);
+    }
+}
+
+function completeComprehension() {
+    document.getElementById('comprehensionStep').classList.add('hidden');
+    document.getElementById('writingStep').classList.remove('hidden');
+    currentStep = 4;
+    
+    // Setup writing word counter
+    const textarea = document.getElementById('writingResponse');
+    textarea.addEventListener('input', function() {
+        const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
+        writingWordCount = words.length;
+        document.getElementById('wordCount').textContent = writingWordCount;
+        
+        if (writingWordCount >= 30) {
+            document.getElementById('writingCompleteBtn').disabled = false;
+        }
+    });
+}
+
+function checkGrammar() {
+    alert('Grammar checking feature activated! In a real system, this would analyze your writing and provide suggestions.');
+}
+
+function addVocabulary() {
+    const textarea = document.getElementById('writingResponse');
+    const vocabWords = currentActivity.vocabulary.map(v => v.word).join(', ');
+    alert(`Try using these science words in your writing: ${vocabWords}`);
+}
+
+function completeWriting() {
+    document.getElementById('writingStep').classList.add('hidden');
+    document.getElementById('speakingStep').classList.remove('hidden');
+    currentStep = 5;
+}
+
+function startRecording() {
+    const btn = document.getElementById('recordBtn');
+    const status = document.getElementById('recordingStatus');
+    const waveform = document.getElementById('recordingWaveform');
+    
+    if (!isRecording) {
+        isRecording = true;
+        btn.classList.remove('bg-red-500', 'hover:bg-red-600');
+        btn.classList.add('bg-gray-500', 'hover:bg-gray-600');
+        btn.innerHTML = '<i class="fas fa-stop text-xl"></i>';
+        status.textContent = 'Recording... Click to stop';
+        waveform.style.display = 'block';
+        
+        // Simulate recording
+        setTimeout(() => {
+            stopRecording();
+        }, 3000);
+    } else {
+        stopRecording();
+    }
+}
+
+function stopRecording() {
+    isRecording = false;
+    const btn = document.getElementById('recordBtn');
+    const status = document.getElementById('recordingStatus');
+    const waveform = document.getElementById('recordingWaveform');
+    const playbackControls = document.getElementById('playbackControls');
+    
+    btn.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+    btn.classList.add('bg-red-500', 'hover:bg-red-600');
+    btn.innerHTML = '<i class="fas fa-microphone text-xl"></i>';
+    status.textContent = 'Recording complete! You can play it back or record again.';
+    waveform.style.display = 'none';
+    playbackControls.classList.remove('hidden');
+    
+    hasRecording = true;
+    document.getElementById('speakingCompleteBtn').disabled = false;
+}
+
+function playRecording() {
+    alert('Playing back your recording...');
+}
+
+function retakeRecording() {
+    hasRecording = false;
+    document.getElementById('playbackControls').classList.add('hidden');
+    document.getElementById('recordingStatus').textContent = 'Click the microphone to start recording';
+    document.getElementById('speakingCompleteBtn').disabled = true;
+}
+
+function completeSpeaking() {
+    document.getElementById('speakingStep').classList.add('hidden');
+    document.getElementById('completionStep').classList.remove('hidden');
+    currentStep = 6;
+    
+    // Celebrate completion
+    setTimeout(() => {
+        document.querySelector('#completionStep .bg-gradient-to-r').classList.add('unlock-animation');
+    }, 500);
+}
+
+function startNewActivity() {
+    resetActivityProgress();
+    document.getElementById('completionStep').classList.add('hidden');
+    document.getElementById('activityContent').classList.add('hidden');
+    
+    // Reset grade level buttons
+    document.querySelectorAll('.grade-level-btn').forEach(btn => {
+        btn.classList.remove('border-blue-500', 'bg-blue-100');
+        btn.classList.add('border-gray-200', 'bg-gray-50');
+    });
+}
+
+function resetActivityProgress() {
+    currentStep = 1;
+    completedVocabulary = [];
+    listeningComplete = false;
+    comprehensionScore = 0;
+    writingWordCount = 0;
+    hasRecording = false;
+    
+    // Reset all steps
+    document.querySelectorAll('.activity-step').forEach(step => {
+        step.classList.add('hidden');
+    });
+    document.getElementById('vocabularyStep').classList.remove('hidden');
+    
+    // Reset buttons
+    document.getElementById('vocabularyCompleteBtn').disabled = true;
+    document.getElementById('listeningCompleteBtn').disabled = true;
+    document.getElementById('comprehensionCompleteBtn').disabled = true;
+    document.getElementById('writingCompleteBtn').disabled = true;
+    document.getElementById('speakingCompleteBtn').disabled = true;
+    
+    // Reset audio progress
+    document.getElementById('audioProgress').style.width = '0%';
+    document.getElementById('playIcon').classList.remove('fa-pause');
+    document.getElementById('playIcon').classList.add('fa-play');
+    
+    // Clear forms
+    document.getElementById('listeningNotes').value = '';
+    document.getElementById('writingResponse').value = '';
+    document.getElementById('wordCount').textContent = '0';
+}
+
+// Teacher dashboard functions
+function showTeacherTab(tabName) {
+    // Update tab buttons
+    document.querySelectorAll('.teacher-tab').forEach(tab => {
+        tab.classList.remove('border-blue-500', 'text-blue-600');
+        tab.classList.add('border-transparent', 'text-gray-500');
+    });
+    
+    event.target.classList.remove('border-transparent', 'text-gray-500');
+    event.target.classList.add('border-blue-500', 'text-blue-600');
+    
+    // Show tab content
+    document.querySelectorAll('.teacher-tab-content').forEach(content => {
+        content.classList.add('hidden');
+    });
+    
+    document.getElementById(tabName + 'Tab').classList.remove('hidden');
+}
+
+function uploadStudents() {
+    alert('Student roster upload feature: In a real system, this would allow CSV/Excel file upload with student information including names, grades, and current TELPAS levels.');
+}
+
+function addStudent() {
+    alert('Add individual student feature: This would open a form to manually add student information.');
+}
+
+function viewStudent(studentId) {
+    alert(`Viewing detailed progress for ${studentId}: This would show individual student analytics, completed activities, and TELPAS progression.`);
+}
+
+function assessStudent(studentId) {
+    alert(`TELPAS assessment for ${studentId}: This would open rubric-based assessment tools for Speaking, Listening, and Writing domains.`);
+}
+
+function createAssessment() {
+    alert('Create new TELPAS assessment: This would open tools to build custom assessments aligned to Performance Level Descriptors.');
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Language Bridge Academy initialized');
+    
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModals();
+        }
+    });
+    
+    // Add smooth scrolling for better UX
+    document.documentElement.style.scrollBehavior = 'smooth';
+});
+
+</script>
+
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDhUSIm5eCeEInQywIsk9CKqiVflOsZngQSKBzd6174tMomq%2F0IYHkd6j8%2FWYmerh3lXOSbf0OvsDBe35r1Yx9kbNhVaEF9Lz12eqxeUg3OsxI7es0XF14%2F0XI24LN0NxGAn0NiqvuKRflWDJF7UuvLMGVW5fKXOU%2BDFzug9K5x6L%2FRezvmlmHlK7LKfvo5Dlu9dzRXfyr5ASDPHRc1oahGDTIbpxdOsKhVQNRdwtpXBS%2FXwol8FKwcnX86OLSzXIFtzR78PENmyx2nd3WL8J2zDcWqHdHCXjkk0aMe0qVGpsJBews%2F9EyHeIZk%2F%2FX5dDJiFJT2FShjeCsDrbs53yciX4JYQjwOj8yn93hTpQ8nHht1IXk00i2lrJUm14GP%2FANqzUpV4Dva9F4ILyyyMwG6zU4irExoJYkIRec75twQWpr4ASnCE%2FU9c5HVonLQjAg2OnLofjwYeUHpqYMyM3mMwSbvyMJUZf1fZCPYVO0J6tVu3f%2FmdVwKtzUDbd4fC3coin2GgX1S7uzrOdSZgaMvo%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDhUSIm5eCeEInQywIsk9CKqiVflOsZngQSKBzd6174tMomq/0IYHkd6j8/WYmerh3lXOSbf0OvsDBe35r1Yx9kbNhVaEF9Lz12eqxeUg3OsxI7es0XF14/0XI24LN0NxGAn0NiqvuKRflWDJF7UuvLMGVW5fKXOU+DFzug9K5x6L/RezvmlmHlK7LKfvo5Dlu9dzRXfyr5ASDPHRc1oahGDTIbpxdOsKhVQNRdwtpXBS/Xwol8FKwcnX86OLSzXIFtzR78PENmyx2nd3WL8J2zDcWqHdHCXjkk0aMe0qVGpsJBews/9EyHeIZk//X5dDJiFJT2FShjeCsDrbs53yciX4JYQjwOj8yn93hTpQ8nHht1IXk00i2lrJUm14GP/ANqzUpV4Dva9F4ILyyyMwG6zU4irExoJYkIRec75twQWpr4ASnCE/U9c5HVonLQjAg2OnLofjwYeUHpqYMyM3mMwSbvyMJUZf1fZCPYVO0J6tVu3f/mdVwKtzUDbd4fC3coin2GgX1S7uzrOdSZgaMvo=";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
